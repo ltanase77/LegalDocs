@@ -1,2 +1,2 @@
 # LegalDocs
-Legal docs created n components located in a database (MEAN stack)
+Legal docs created based on components located in a database (MEAN stack)
