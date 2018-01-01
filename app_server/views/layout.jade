@@ -1,12 +1,69 @@
 doctype html
+block vars
 html
   head
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    title= title
+    title= pageTitle
     link(rel='stylesheet', href='/bootstrap/css/paper.bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    .navbar.navbar-default.navbar-fixed-top
+        .container
+            .navbar-header
+                a.navbar-brand(href='/') LegalDocs
+                button.navbar-toggle(type='button', data-toggle='collapse' data-target='#navbar-main')
+                   span.icon-bar
+                   span.icon-bar
+                   span.icon-bar
+            #navbar-main.navbar-collapse.collapse
+                ul.nav.navbar-nav
+                    li
+                        a(href='/') Home
+                    li
+                        a(href='/about') About
+                    li
+                        a(href='/contact') Contact
+    .container
+        .row
+            block title
+                #banner.page-header
+                    .row
+                        .col-lg-6
+                            h3 #{title}
+                              small &nbsp; #{description}
+            block side
+                .col-xs-12.col-sm-4
+                    h4 Categorii de documente
+                    .list-group
+                        a.list-group-item(href='/contracts')
+                            h5.list-group-item-heading Contracte
+                            p.list-group-item-text Obtineti access la forme contractuale necesare activitatii dumneavoastra
+                        a.list-group-item(href='/notices')
+                            h5.list-group-item-heading Notificari
+                            p.list-group-item-text Atentionati partenerii dumneavoastra despre incalcarea obligatiilor contractuale
+                        a.list-group-item(href='/corporate')
+                            h5.list-group-item-heading Documente Societare
+                            p.list-group-item-text Folositi documente societare adaptate situatiei dumneavoastra
+                        a.list-group-item(href='/court')
+                            h5.list-group-item-heading Cereri judiciare
+                            p.list-group-item-text Adresati-va instantelor de judecata intr-un limbaj profesionit
+            block content
+
+        footer
+           .row
+               .col-xs-12
+                   ul.footer-list
+                      li.footer-item
+                       small &copy; Lucian Tanase 2017
+                      li.footer-item
+                       small Disclaimer
+                      li.footer-item
+                       small Terms of Use
+                      li.footer-item
+                       small Cookies Policy
+                      li.footer-item
+                       small Data Privacy
 
     script(src='/javascripts/jquery-3.1.0.js')
     script(src='/bootstrap/js/bootstrap.min.js')
+    script(src='/javascripts/main.js')
