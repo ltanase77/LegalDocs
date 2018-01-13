@@ -2,3 +2,12 @@
 .map {
     height: 400px;
 }
+
+.types{
+    border: 1px solid rebeccapurple;
+    border-radius: 20px;
+}
+
+.contract-area {
+    border: 1px dashed navy;
+}

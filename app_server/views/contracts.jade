@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    .col-xs-12.col-sm-8.pull-right
+        p.lead= pageContent.leadline
+        .form-group
+            select.form-control(name="select")
+                each val in pageContent.contractsList
+                    option(value=val)= "Contract de " + val
+        .form-group.types Options goes here
+
+        .panel.contract-area(contenteditable) Content of contract goes
+            h4 Contract de comodat
