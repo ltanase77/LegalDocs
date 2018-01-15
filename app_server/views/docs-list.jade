@@ -5,7 +5,7 @@ block content
         p.lead= pageContent.leadline
         .panel.panel-primary
             .panel-heading
-                h4.panel-title Concept
+                h4.panel-title= pageContent.panelTitle[0]
             .panel-body
                 p
                     | Ideea principala din spatele acestei aplicatii este sa asigure
@@ -19,11 +19,11 @@ block content
                     | alegeri puse la dispozitia sa de catre aplicatie.
         .panel.panel-primary
             .panel-heading
-                h4.panel-title Cum functioneaza
+                h4.panel-title= pageContent.panelTitle[1]
             .panel-body
         .panel.panel-primary
             .panel-heading
-                h4.panel-title Technologie
+                h4.panel-title= pageContent.panelTitle[2]
             .panel-body
                 p
                     | Aplicatia este construita cu <span class="badge">NodeJs</span>

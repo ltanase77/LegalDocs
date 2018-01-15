@@ -1,0 +1,5 @@
+
+mixin select()
+    select.form-control(name="select")
+        each val in pageContent.docList
+            option(value=val)= pageContent.type + " de " + val

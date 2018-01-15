@@ -35,18 +35,11 @@ html
                 .col-xs-12.col-sm-4
                     h4 Categorii de documente
                     .list-group
-                        a.list-group-item(href='/contracts')
-                            h5.list-group-item-heading Contracte
-                            p.list-group-item-text Obtineti access la forme contractuale necesare activitatii dumneavoastra
-                        a.list-group-item(href='/notices')
-                            h5.list-group-item-heading Notificari
-                            p.list-group-item-text Atentionati partenerii dumneavoastra despre incalcarea obligatiilor contractuale
-                        a.list-group-item(href='/corporate')
-                            h5.list-group-item-heading Documente Societare
-                            p.list-group-item-text Folositi documente societare adaptate situatiei dumneavoastra
-                        a.list-group-item(href='/court')
-                            h5.list-group-item-heading Cereri judiciare
-                            p.list-group-item-text Adresati-va instantelor de judecata intr-un limbaj profesionit
+                        each val in side
+                            a.list-group-item(href= val.item)
+                                h5.list-group-item-heading= val.heading
+                                p.list-group-item-text= val.text
+
             block content
 
         footer
