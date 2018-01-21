@@ -1,0 +1,12 @@
+extends layout
+include includes/functions
+
+block content
+   .col-xs-12.col-sm-8.pull-right
+      p.lead= pageContent.leadline
+      .form-group
+          +select()
+      .form-group.types Faceti alegerile ce se potrivesc contextului dumneavoastra
+
+      .panel.contract-area(contenteditable) Content of contract goes
+          h4 Certificat de grefa

@@ -3,11 +3,17 @@
     height: 400px;
 }
 
-.types{
-    border: 1px solid rebeccapurple;
-    border-radius: 20px;
-}
 
 .contract-area {
     border: 1px dashed navy;
+}
+
+.control-label {
+    padding-right: 6px;
+}
+
+.form-section {
+    width: 49%;
+    margin-bottom: 10px;
+    display: inline-block;
 }

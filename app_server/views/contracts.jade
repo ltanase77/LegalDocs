@@ -1,4 +1,5 @@
 extends layout
+include includes/functions
 
 block content
     .col-xs-12.col-sm-8.pull-right
@@ -6,8 +7,21 @@ block content
         .form-group
             select.form-control(name="select")
                 each val in pageContent.docList
-                    option(value=val)= "Contract de " + val
-        .form-group.types Options goes here
-
+                    option(value=val)= "Contract " + val
+        .types
+            p Faceti alegerile ce se potrivesc contextului dumneavoastra:
+            form.form-inline
+                each opt in options
+                    if opt.type === 'de comodat'
+                        fieldset.form-section
+                            legend Parti
+                            each value in opt.parties
+                                label.control-label= value[0]
+                                input(type="radio" name="parties" value= value[1])
+                        fieldset.form-section
+                            legend Obiect
+                            each value in opt.object
+                                label.control-label= value[0]
+                                input(type="radio" name="object" value= value[1])
         .panel.contract-area(contenteditable) Content of contract goes
             h4 Contract de comodat

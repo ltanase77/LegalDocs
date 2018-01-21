@@ -51,9 +51,32 @@ module.exports.contracts = function(request, response) {
         pageContent: {
             leadline: 'Tipuri de contracte',
             type: 'Contract',
-            docList: ["comodat", "mandat", "inchiriere"]
+            docList: ["de comodat", "de mandat", "de inchiriere"]
         },
-        side: sideContent
+        side: sideContent,
+        options: [
+            {
+                type: 'de comodat',
+                parties : [
+                    ['Doua Parti', 'two'],
+                    ['Parti Multiple', 'multiple']
+                ],
+                object : [
+                    ['Bun Mobil', 'moveable'],
+                    ['Bun Imobil', 'real-estate']
+                ]
+            },
+
+            {
+                type: 'de mandat',
+                parties: [
+                    ['Doua Parti', 'two'],
+                    ['Parti Multiple', 'multiple']
+                ],
+                object : []
+            }
+
+        ]
     });
 };
 
@@ -64,12 +87,12 @@ module.exports.notices = function(request, response) {
         pageTitle: 'LegalDocs - Notificari',
         pageHeader: {
             title: 'Notificari',
-            strapline: 'Lore ipsum'
+            strapline: 'Creati notificari in mod simplu si eficient'
         },
         pageContent: {
             leadline: 'Tipuri de notificari',
             type: 'Notificare',
-            docList: ["neplata", "evacuare", "neexecutare"]
+            docList: ["de neplata", "de evacuare", "de neexecutare"]
         },
         side: sideContent
     });
@@ -77,11 +100,19 @@ module.exports.notices = function(request, response) {
 /* GET corporate page */
 
 module.exports.corporate = function(request, response) {
-    response.render('index', {
+    response.render('corporate', {
         pageTitle: 'LegalDocs - Societati',
         pageHeader: {
             title: 'Documente Societare',
-            strapline: 'Lore ipsum'
+            strapline: 'Schimbarile societare la indemana'
+        },
+        pageContent: {
+          leadline: 'Tipuri de documente societare',
+          type: 'Hotarare',
+          docList: ['AGA(SRL cu asociat unic)', 'AGA(SRL)', 'AGA(SA)'],
+          formSections: {
+
+          }
         },
         side: sideContent
     });
@@ -89,11 +120,16 @@ module.exports.corporate = function(request, response) {
 
 /* GET court page */
 module.exports.court = function(request, response){
-    response.render('index', {
+    response.render('court', {
         pageTitle: 'LegalDocs - Instanta',
         pageHeader: {
             title: 'Cereri Judiciare',
-            strapline: 'Lore ipsum'
+            strapline: 'Adresati-va instantei in mod facil'
+        },
+        pageContent: {
+          leadline: 'Tipuri de cereri',
+          type: ['Cerere'],
+          docList: ['de eliberare certificat de grefa', 'de legalizare', 'contraventionala', 'de chemare in judecata']
         },
         side: sideContent
     });
