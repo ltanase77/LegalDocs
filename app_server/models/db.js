@@ -39,3 +39,5 @@ process.on('SIGTERM', function() {
         proces.exit(0)
     });
 });
+
+require('contracts');
