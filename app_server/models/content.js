@@ -18,7 +18,7 @@ let sideContentSchema = new mongoose.Schema({
     text: String
 });
 
-let optionsSchema = new monoose.Schema({
+let optionsSchema = new mongoose.Schema({
     type: String,
     parties: [String],
     object: [String]
@@ -32,4 +32,4 @@ let pageSchema = new mongoose.Schema({
     options: [optionsSchema]
 });
 
-moongose.model('PageContent', pageSchema, 'pagecontents');
+mongoose.model('PageContent', pageSchema, 'pagecontents');

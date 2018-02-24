@@ -40,4 +40,4 @@ process.on('SIGTERM', function() {
     });
 });
 
-require('contracts');
+require('./content');
