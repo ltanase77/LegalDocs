@@ -25,10 +25,11 @@ let optionsSchema = new mongoose.Schema({
 });
 
 let pageSchema = new mongoose.Schema({
+    pageName: {type: String, required: true},
     pageTitle: {type: String, required: true},
     pageHeader: pageHeaderSchema,
     pageContent: pageContentSchema,
-    side: sideContentSchema,
+    side: [sideContentSchema],
     options: [optionsSchema]
 });
 
