@@ -1,53 +1,77 @@
 /* GET about page */
-var sideContent = [
-    {
-        item: "/contracts",
-        heading: "Contracte",
-        text: "Obtineti access la forme contractuale necesare activitatii dumneavoastra"
-    },
+const Request = require('request');
+let apiOptions = {
+    server: "http://localhost:5050"
+};
+if (process.env.NODE_ENV === 'production') {
+    apiOptions.server = 'https://easytemplate.azurewebsites.net';
+}
 
-    {
-        item: "/notices",
-        heading: "Notificari",
-        text: "Atentionati partenerii dumneavoastra despre incalcarea obligatiilor contractuale"
-    },
-
-    {
-        item: "/corporate",
-        heading: "Documente Societare",
-        text: "Folositi documente societare adaptate situatiei dumneavoastra"
-    },
-
-    {
-        item: "/court",
-        heading: "Cereri judiciare",
-        text: "Adresati-va instantelor de judecata intr-un limbaj profesionit"
-    }
-];
-
-module.exports.about = function(request, response) {
-    response.render('about', {
-        pageTitle: 'LegalDocs - Despre Noi',
+let renderPage = function(req, res, view, body) {
+    res.render(`${view}`, {
+        pageTitle: body.pageTitle,
         pageHeader: {
-            title: 'Despre Noi',
-            strapline: 'Sincronizam dreptul cu tehnologia'
-
+            title: body.pageHeader.title,
+            strapline: body.pageHeader.strapline
         },
         pageContent: {
-            leadline: 'Dreptul din perspectiva programarii'
+            leadline: body.pageContent.leadline,
         },
-        side: sideContent
+        side: body.side,
+        comments: {
+            name: body.name,
+            comment: body.content
+        }
+
+    })
+};
+
+let renderFeedback = function(req, res, view, body) {
+    res.render(`${view}`, {
+        pageTitle: body[2].pageTitle,
+        pageHeader: {
+            title: body[2].pageHeader.title,
+            strapline: body[2].pageHeader.strapline
+        },
+        pageContent: {
+            leadline: body[2].pageContent.leadline,
+        },
+        side: body[2].side,
+    })
+};
+
+module.exports.about = function(req, res) {
+    let path = '/api/about';
+    let requestOptions = {
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
+    };
+    Request(requestOptions, function(err, response, body) {
+        renderPage(req, res, 'about', body)
     });
 };
 
-module.exports.contact = function(request, response ) {
-    response.render('contact', {
-        pageTitle: 'LegalDocs - Contact',
-        pageHeader: {
-            title: 'Contactati-ne',
-            strapline: 'Opinia dumneavoastra contacteaza'
+module.exports.contact = function(req, res ) {
+    let path = '/api/contact';
+    let requestOptions = {
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
+    };
+    Request(requestOptions, function(err, response, body) {
+        renderPage(req, res, 'contact', body)
+    });
+};
 
-        },
-        side: sideContent
+module.exports.feedback = function (req, res) {
+    let path = '/api/feedback';
+    let requestOptions = {
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
+    };
+    Request(requestOptions, function(err, response, body) {
+        renderFeedback(req, res, 'feedback', body)
     });
 };

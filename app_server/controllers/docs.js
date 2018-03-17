@@ -1,59 +1,28 @@
 /* GET home page */
-var sideContent = [
-    {
-        item: "/contracts",
-        heading: "Contracte",
-        text: "Obtineti access la forme contractuale necesare activitatii dumneavoastra"
-    },
-
-    {
-        item: "/notices",
-        heading: "Notificari",
-        text: "Atentionati partenerii dumneavoastra despre incalcarea obligatiilor contractuale"
-    },
-
-    {
-        item: "/corporate",
-        heading: "Documente Societare",
-        text: "Folositi documente societare adaptate situatiei dumneavoastra"
-    },
-
-    {
-        item: "/court",
-        heading: "Cereri judiciare",
-        text: "Adresati-va instantelor de judecata intr-un limbaj profesionit"
-    }
-];
-
-module.exports.homelist = function(request, response) {
-    response.render('docs-list', {
-        pageTitle: 'LegalDocs',
-        pageHeader: {
-            title: 'LegalDocs',
-            strapline: 'Documente juridice la discretie!'
-        },
-        pageContent: {
-            leadline: 'LegalDocs te ajuta sa obtii documentele de care ai nevoie',
-            panelTitle: [ "Concept", "Cum functioneaza", "Tehnologie" ]
-        },
-        side: sideContent
-    });
+const Request = require('request');
+let apiOptions = {
+    server: "http://localhost:5050"
 };
+if (process.env.NODE_ENV === 'production') {
+    apiOptions.server = 'https://easytemplate.azurewebsites.net';
+}
 
-/* GET contracts page */
-module.exports.contracts = function(request, response) {
-    response.render('contracts', {
-        pageTitle: 'LegalDocs - Contracte',
+let renderPage = function(req, res, view, body) {
+    res.render(`${view}`, {
+        pageTitle: body.pageTitle,
         pageHeader: {
-            title: 'Contracte',
-            strapline: 'Generati contracte in mod dinamic!'
+            title: body.pageHeader.title,
+            strapline: body.pageHeader.strapline
         },
         pageContent: {
-            leadline: 'Tipuri de contracte',
-            type: 'Contract',
-            docList: ["de comodat", "de mandat", "de inchiriere"]
+            leadline: body.pageContent.leadline,
+            type: body.pageContent.type,
+            panelTitle: body.pageContent.panelTitle,
+            docList: body.pageContent.docList,
+            formsSection: {}
         },
-        side: sideContent,
+        side: body.side,
+
         options: [
             {
                 type: 'de comodat',
@@ -77,61 +46,73 @@ module.exports.contracts = function(request, response) {
             }
 
         ]
+    })
+};
+
+module.exports.homelist = function(req, res) {
+    let path = '/api';
+    let requestOptions = {
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
+    };
+    Request(requestOptions, function(err, response, body) {
+        renderPage(req, res, 'docs-list', body)
     });
+};
+
+/* GET contracts page */
+module.exports.contracts = function(req, res) {
+    let path = '/api/contracts';
+    let requestOptions = {
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
+    };
+    Request(requestOptions, function(err, response, body) {
+        renderPage(req, res, 'contracts', body);
+    });
+
 };
 
 /* GET notices page */
 
-module.exports.notices = function(request, response) {
-    response.render('notices', {
-        pageTitle: 'LegalDocs - Notificari',
-        pageHeader: {
-            title: 'Notificari',
-            strapline: 'Creati notificari in mod simplu si eficient'
-        },
-        pageContent: {
-            leadline: 'Tipuri de notificari',
-            type: 'Notificare',
-            docList: ["de neplata", "de evacuare", "de neexecutare"]
-        },
-        side: sideContent
+module.exports.notices = function(req, res) {
+    let path = '/api/notices';
+    let requestOptions = {
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
+    };
+    Request(requestOptions, function(err, response, body) {
+        renderPage(req, res, 'notices', body);
     });
 };
 /* GET corporate page */
 
-module.exports.corporate = function(request, response) {
-    response.render('corporate', {
-        pageTitle: 'LegalDocs - Societati',
-        pageHeader: {
-            title: 'Documente Societare',
-            strapline: 'Schimbarile societare la indemana'
-        },
-        pageContent: {
-          leadline: 'Tipuri de documente societare',
-          type: 'Hotarare',
-          docList: ['AGA(SRL cu asociat unic)', 'AGA(SRL)', 'AGA(SA)'],
-          formSections: {
-
-          }
-        },
-        side: sideContent
+module.exports.corporate = function(req, res) {
+    let path = '/api/corporate';
+    let requestOptions = {
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
+    };
+    Request(requestOptions, function(err, response, body) {
+        renderPage(req, res, 'corporate', body);
     });
 };
 
 /* GET court page */
-module.exports.court = function(request, response){
-    response.render('court', {
-        pageTitle: 'LegalDocs - Instanta',
-        pageHeader: {
-            title: 'Cereri Judiciare',
-            strapline: 'Adresati-va instantei in mod facil'
-        },
-        pageContent: {
-          leadline: 'Tipuri de cereri',
-          type: ['Cerere'],
-          docList: ['de eliberare certificat de grefa', 'de legalizare', 'contraventionala', 'de chemare in judecata']
-        },
-        side: sideContent
+module.exports.court = function(req, res){
+    let path = '/api/court';
+    let requestOptions = {
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
+    };
+    Request(requestOptions, function(err, response, body) {
+        renderPage(req, res, 'court', body);
     });
 };
+
 

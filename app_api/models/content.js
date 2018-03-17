@@ -24,6 +24,7 @@ let optionsSchema = new mongoose.Schema({
     object: [String]
 });
 
+
 let pageSchema = new mongoose.Schema({
     pageName: {type: String, required: true},
     pageTitle: {type: String, required: true},
@@ -33,4 +34,11 @@ let pageSchema = new mongoose.Schema({
     options: [optionsSchema]
 });
 
+let commentsSchema = new mongoose.Schema({
+    tag: {type: String, required: true},
+    name: {type: String, required: true},
+    content: String
+});
+
 mongoose.model('PageContent', pageSchema, 'pagecontents');
+mongoose.model('Comment', commentsSchema, 'pagecontents');

@@ -1,5 +1,6 @@
 const mongoose= require('mongoose');
 const pageContent = mongoose.model('PageContent');
+const Comment = mongoose.model('Comment');
 const sendJsonResponse = function(response, status, content) {
     response.status(status);
     response.json(content);
@@ -52,4 +53,28 @@ module.exports.contact = function(request, response) {
             sendJsonResponse(response, 200, content);
         });
 };
+module.exports.feedback = function(request,response) {
+   Comment.find({tag: "comment"}).exec(function(err, comments) {
+       pageContent.findOne({pageName: "Feedback"}).exec(function(err, page) {
+           let content = comments.concat(page);
+           sendJsonResponse(response, 200, content);
+       });
 
+   });
+};
+
+module.exports.createFeedback = function(request, response) {
+    Comment.create({
+        tag: "comment",
+        name: request.body.name,
+        content: request.body.comment
+        },
+        function(err, comment){
+           if (err) {
+               sendJsonResponse(response, 400, err);
+           } else {
+               sendJsonResponse(response, 201, comment );
+           }
+        }
+    );
+};

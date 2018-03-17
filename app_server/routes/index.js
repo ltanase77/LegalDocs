@@ -15,6 +15,7 @@ router.get('/court', ctrlDocs.court);
 
 router.get('/about', ctrlOthers.about);
 router.get('/contact', ctrlOthers.contact);
+router.get('/feedback', ctrlOthers.feedback);
 
 
 module.exports = router;
