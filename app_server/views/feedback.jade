@@ -3,28 +3,30 @@ extends layout
 block content
     col-xs-12.col-sm-8.pull-right
         p.lead=pageContent.leadline
+        - if (error === "val")
+            .alert.alert-danger(role="alert") All fields required, please try again
         .panel.panel-primary
             .panel-heading
                 h2.panel-title Fill up this form
             .panel-body
-                form.form-horizontal( name="feedback-form" action="/" method="post" novalidate)
+                form.form-horizontal( id="addComment" name="feedback-form" action="/feedback/create" method="post" novalidate)
                     .form-group
                         label.col-sm-2 Name
                         input.col-sm-6(type="text" name="name")
                     .form-group
                         label.col-sm-2 Comments
-                        textarea.col-sm-6(name="comments") Insert your comments
+                        textarea.col-sm-6(name="content" id="comment") Insert your comments
                     form-group
                         input.btn.btn-primary(type="submit" name="submit" value="Send Feedback")
         .panel.panel-primary
             .panel-heading
                 h2.panel-title Feedback from our users
              .panel-body
-                 .well-sm
+                 .well.well-sm
                      span Name:
-                     p Lucian Tanase
-                     span Comment
-                     p "Hello there"
-                     span Date
-                     p "10.03.2018"
+                     p=comments.name
+                     span Comment:
+                     p=comments.content
+                     span Date:
+                     p=comments.date
                      hr

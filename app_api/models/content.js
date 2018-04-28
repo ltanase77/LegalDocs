@@ -37,7 +37,8 @@ let pageSchema = new mongoose.Schema({
 let commentsSchema = new mongoose.Schema({
     tag: {type: String, required: true},
     name: {type: String, required: true},
-    content: String
+    content: {type: String, required: true},
+    postedOn: {type: Date, "default": Date.now}
 });
 
 mongoose.model('PageContent', pageSchema, 'pagecontents');

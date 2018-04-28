@@ -1,11 +1,8 @@
 /* GET about page */
 const Request = require('request');
 let apiOptions = {
-    server: "http://localhost:5050"
+    server: "http://localhost:5000"
 };
-if (process.env.NODE_ENV === 'production') {
-    apiOptions.server = 'https://easytemplate.azurewebsites.net';
-}
 
 let renderPage = function(req, res, view, body) {
     res.render(`${view}`, {
@@ -18,26 +15,45 @@ let renderPage = function(req, res, view, body) {
             leadline: body.pageContent.leadline,
         },
         side: body.side,
-        comments: {
-            name: body.name,
-            comment: body.content
-        }
-
     })
 };
 
 let renderFeedback = function(req, res, view, body) {
+    let index = body.length - 1;
     res.render(`${view}`, {
-        pageTitle: body[2].pageTitle,
+        pageTitle: body[index].pageTitle,
         pageHeader: {
-            title: body[2].pageHeader.title,
-            strapline: body[2].pageHeader.strapline
+            title: body[index].pageHeader.title,
+            strapline: body[index].pageHeader.strapline
         },
         pageContent: {
-            leadline: body[2].pageContent.leadline,
+            leadline: body[index].pageContent.leadline,
         },
-        side: body[2].side,
+        side: body[index].side,
+        comments: {
+            name: body[0].name,
+            content: body[0].content,
+            date: body[0].postedOn
+        },
+        error: req.query.err
     })
+};
+
+let _showError = function(req, res, status) {
+    let title, content;
+    if (status === 404) {
+        title = "404 page not found";
+        content = "Oops! We can not find this page!"
+    } else {
+        title = status + " something is gone wrong";
+        content = "Something doe snot worked as expected";
+    }
+
+    res.status(status);
+    res.render('error', {
+        title: title,
+        errorMsg: content
+    });
 };
 
 module.exports.about = function(req, res) {
@@ -48,7 +64,11 @@ module.exports.about = function(req, res) {
         json: {}
     };
     Request(requestOptions, function(err, response, body) {
-        renderPage(req, res, 'about', body)
+        if (response.statusCode === 200) {
+            renderPage(req, res, 'about', body);
+        } else {
+            _showError(req, res, response.statusCode);
+        }
     });
 };
 
@@ -60,7 +80,11 @@ module.exports.contact = function(req, res ) {
         json: {}
     };
     Request(requestOptions, function(err, response, body) {
-        renderPage(req, res, 'contact', body)
+        if (response.statusCode === 200) {
+            renderPage(req, res, 'contact', body);
+        } else {
+            _showError(req, res, response.statusCode);
+        }
     });
 };
 
@@ -72,6 +96,37 @@ module.exports.feedback = function (req, res) {
         json: {}
     };
     Request(requestOptions, function(err, response, body) {
-        renderFeedback(req, res, 'feedback', body)
+        if (response.statusCode === 200) {
+            renderFeedback(req, res, 'feedback', body);
+        } else {
+            _showError(req, res, response.statusCode);
+        }
     });
+};
+
+module.exports.createFeedback = function(req, res) {
+    let path = '/api/feedback/create';
+    let postdata = {
+        tag: "comment",
+        name: req.body.name,
+        content: req.body.content
+    };
+    let requestOptions = {
+        url: apiOptions.server + path,
+        method: "POST",
+        json: postdata
+    };
+    if (!postdata.name || !postdata.content) {
+        res.redirect('/feedback?err=val')
+    } else {
+        Request(requestOptions, function (err, response, body) {
+            if (response.statusCode === 201) {
+                res.redirect('/feedback');
+            } else if (response.statusCode === 400 && body.name && body.name === "ValidationError") {
+                res.redirect('/feedback?err=val')
+            } else {
+                _showError(req, res, response.statusCode);
+            }
+        });
+    }
 };

@@ -67,7 +67,7 @@ module.exports.createFeedback = function(request, response) {
     Comment.create({
         tag: "comment",
         name: request.body.name,
-        content: request.body.comment
+        content: request.body.content
         },
         function(err, comment){
            if (err) {

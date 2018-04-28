@@ -1,6 +1,6 @@
 doctype html
 block vars
-html
+html(ng-app='legalDocs')
   head
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title= pageTitle
@@ -39,8 +39,8 @@ html
                     .list-group
                         each val in side
                             a.list-group-item(href= val.item)
-                                h5.list-group-item-heading= val.heading
-                                p.list-group-item-text= val.text
+                                h5.list-group-item-heading=val.heading
+                                p.list-group-item-text=val.text
 
             block content
 
@@ -58,7 +58,8 @@ html
                        small Cookies Policy
                       li.footer-item
                        small Data Privacy
-
+    script(src='/javascripts/angular.js')
+    script(src='/javascripts/legalDocs.js')
     script(src='/javascripts/jquery-3.1.0.js')
     script(src='/bootstrap/js/bootstrap.min.js')
     script(src='/javascripts/main.js')
