@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');//requiring mongoose module
-var gracefulShutdown;
-var dbc = 'mongodb://localhost/local'; //database uri
+let mongoose = require('mongoose');//requiring mongoose module
+let gracefulShutdown;
+let dbc = 'mongodb://localhost/local'; //database uri
 mongoose.connect(dbc); //connecting to the database
 
 mongoose.connection.on('connected', function() {
@@ -41,3 +41,4 @@ process.on('SIGTERM', function() {
 });
 
 require('./content');
+require('./users');
